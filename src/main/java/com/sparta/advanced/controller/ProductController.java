@@ -23,13 +23,11 @@ public class ProductController {
         this.productService = productService;
     }
 
-    // 등록된 전체 상품 목록 조회
+    // 로그인한 회원이 등록한 상품들 조회
     @GetMapping("/api/products")
-    public List<Product> getProducts() {
-
-        List<Product> products = productService.getProducts();
-        // 응답 보내기
-        return products;
+    public List<Product> getProducts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getUser().getId();
+        return productService.getProducts(userId);
     }
 
     // 신규 상품 등록
