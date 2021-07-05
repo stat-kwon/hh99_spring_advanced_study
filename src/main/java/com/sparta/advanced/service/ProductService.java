@@ -20,7 +20,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private static final int MIN_PRICE = 100;
 
-    // 생성자: ProductService() 가 생성될 때 호출됨
+    // 생성자: ProductService() 가 생성될 때 호출됨zz
     @Autowired
     public ProductService(ProductRepository productRepository) {
         // 멤버 변수 생성
