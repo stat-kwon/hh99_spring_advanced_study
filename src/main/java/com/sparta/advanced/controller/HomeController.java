@@ -1,6 +1,7 @@
 package com.sparta.advanced.controller;
 
 import com.sparta.advanced.security.UserDetailsImpl;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ public class HomeController {
         return "index";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/admin")
     public String admin(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         model.addAttribute("username", userDetails.getUsername());
