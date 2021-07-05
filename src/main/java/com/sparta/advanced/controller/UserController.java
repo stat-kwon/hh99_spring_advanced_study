@@ -43,4 +43,9 @@ public class UserController {
         userService.registerUser(requestDto);
         return "redirect:/";
     }
+
+    @GetMapping("/user/forbidden")
+    public String forbidden() {
+        return "forbidden";
+    }
 }
