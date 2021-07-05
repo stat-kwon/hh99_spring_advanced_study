@@ -66,7 +66,7 @@ public class UserService {
         // 회원 Id = 카카오 nickname
         String username = nickname;
         // 패스워드 = 카카오 Id + ADMIN TOKEN
-        String password = kakaoId + ADMIN_TOKEN;
+        String password = kakaoId + ADMIN_TOKEN; // kakaoId가 primary key 역할을 하게 됨
 
         // DB 에 중복된 Kakao Id 가 있는지 확인
         User kakaoUser = userRepository.findByKakaoId(kakaoId)
@@ -80,12 +80,12 @@ public class UserService {
             UserRole role = UserRole.USER;
 
             kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
-            userRepository.save(kakaoUser);
+            userRepository.save(kakaoUser); // DB에 저장
         }
 
         // 로그인 처리
-        Authentication kakaoUsernamePassword = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authentication = authenticationManager.authenticate(kakaoUsernamePassword);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication kakaoUsernamePassword = new UsernamePasswordAuthenticationToken(username, password); // 스프링 시큐리티를 이용해서 로그인 처리
+        Authentication authentication = authenticationManager.authenticate(kakaoUsernamePassword); // 스프링 시큐리티에서 인증을 관리하는 매니저 역할
+        SecurityContextHolder.getContext().setAuthentication(authentication); // 홀더에다가 인증을 넣어주게되면 카카오 로그인이 일어남
     }
 }

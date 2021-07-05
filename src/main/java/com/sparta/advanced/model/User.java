@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity // DB 테이블 역할을 합니다.
 public class User extends Timestamped {
 
-    public User(String username, String password, String email, UserRole role) {
+    public User(String username, String password, String email, UserRole role) { // 일반 가입 사용자는 kakaoId가 null값으로 처리
         this.username = username;
         this.password = password;
         this.email = email;
@@ -22,7 +22,7 @@ public class User extends Timestamped {
         this.kakaoId = null;
     }
 
-    public User(String username, String password, String email, UserRole role, Long kakaoId) {
+    public User(String username, String password, String email, UserRole role, Long kakaoId) { // 카카오로 가입한 사람은 kakaoId를 갖는다.
         this.username = username;
         this.password = password;
         this.email = email;
