@@ -49,7 +49,7 @@ public class UserController {
         return "forbidden";
     }
 
-    @GetMapping("/user/kakao/callback")
+    @GetMapping("/user/kakao/callback") // 순서 1
     public String kakaoLogin(String code) {
         // authorizedCode: 카카오 서버로부터 받은 인가 코드
         userService.kakaoLogin(code);

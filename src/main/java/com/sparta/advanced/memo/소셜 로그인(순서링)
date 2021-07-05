@@ -1,0 +1,23 @@
+카카오
+
+순서1) UserController
+카카오 서버로부터 받은 인가코드를 받는 내용
+userService에서 이 인가코드를 가지고 카카오 로그인을 시켜달라고 요청을 할 것임
+
+순서2) UserService
+카카오 OAuth2를 통해 카카오 사용자 정보를 조회하게 됨
+내부의 kakaoOAuth2.getUserInfo(authorizedCode)를 통해 KakaoOauth2를 실행
+
+순서3) kakaoOauth2
+인가코드 -> 엑세스 토큰 1) getUserInfo(String authorizedCode)
+엑세스 토큰 -> 카카오 사용자 정보 2) getUserInfoByToken(String accessToken)
+크게 두가지 동작이 일어나게 됨
+
+1)   RestTemplate라는 서버에서 api요청을 하는 라이브러리를 이용
+     Http 요청하기 -> Post방식으로 -> 그리고 response 변수의 응답 받음.
+     Json으로 들어온 것을 엑세스 토큰으로 파싱하게 됨
+     엑세스 토큰만 필요하기 때문
+
+2)  getUserInfoByToken(String accessToken)을 이용
+    앞서 만든 accessToken을 header에 넣어서 Post요청을 통해 사용자 정보를 받게 됨
+    Http 요청하기 -> Post방식으로 -> 그리고 response 변수의 응답 받음.

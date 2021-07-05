@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class KakaoOAuth2 {
-    public com.sparta.advanced.security.kakao.KakaoUserInfo getUserInfo(String authorizedCode) {
+    public com.sparta.advanced.security.kakao.KakaoUserInfo getUserInfo(String authorizedCode) { // 순서 3
         // 1. 인가코드 -> 액세스 토큰
         String accessToken = getAccessToken(authorizedCode);
         // 2. 액세스 토큰 -> 카카오 사용자 정보

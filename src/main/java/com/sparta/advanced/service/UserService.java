@@ -55,7 +55,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void kakaoLogin(String authorizedCode) {
+    public void kakaoLogin(String authorizedCode) { // 순서 2
         // 카카오 OAuth2 를 통해 카카오 사용자 정보 조회
         com.sparta.advanced.security.kakao.KakaoUserInfo userInfo = kakaoOAuth2.getUserInfo(authorizedCode);
         Long kakaoId = userInfo.getId();
