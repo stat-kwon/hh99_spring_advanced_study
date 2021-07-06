@@ -18,6 +18,7 @@ import java.util.List;
 public class FolderService {
     // 멤버 변수 선언
     private final FolderRepository folderRepository;
+
     private final ProductRepository productRepository;
 
     // 생성자: ProductFolderService() 가 생성될 때 호출됨
@@ -34,13 +35,32 @@ public class FolderService {
     }
 
     public List<Folder> createFolders(List<String> folderNameList, User user) {
+
+        // 1) 입력으로 들어온 폴더 이름을 기준으로, 회원이 이미 생성한 폴더들을 조회합니다.
+        List<Folder> existFolderList = folderRepository.findAllByUserAndNameIn(user, folderNameList);
+
         List<Folder> folderList = new ArrayList<>();
         for (String folderName : folderNameList) {
-            Folder folder = new Folder(folderName, user);
-            folderList.add(folder);
+            // 2) 이미 생성한 폴더가 아닌 경우만 폴더 생성
+            if (!isExistFolderName(folderName, existFolderList)) {
+                Folder folder = new Folder(folderName, user);
+                folderList.add(folder);
+            }
         }
+
         folderList = folderRepository.saveAll(folderList);
         return folderList;
+    }
+
+    public boolean isExistFolderName(String folderName, List<Folder> existFolderList) {
+        // 기존 폴더 리스트에서 folder name 이 있는지?
+        for (Folder existFolder : existFolderList) {
+            if (existFolder.getName().equals(folderName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // 회원 ID 가 소유한 폴더에 저장되어 있는 상품들 조회
