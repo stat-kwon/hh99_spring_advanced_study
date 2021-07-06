@@ -35,20 +35,29 @@ public class FolderService {
     }
 
     public List<Folder> createFolders(List<String> folderNameList, User user) {
-
-        // 1) 입력으로 들어온 폴더 이름을 기준으로, 회원이 이미 생성한 폴더들을 조회합니다.
-        List<Folder> existFolderList = folderRepository.findAllByUserAndNameIn(user, folderNameList);
-
         List<Folder> folderList = new ArrayList<>();
+
         for (String folderName : folderNameList) {
-            // 2) 이미 생성한 폴더가 아닌 경우만 폴더 생성
-            if (!isExistFolderName(folderName, existFolderList)) {
-                Folder folder = new Folder(folderName, user);
-                folderList.add(folder);
+            // 1) DB 에 폴더명이 folderName 인 폴더가 존재하는지?
+            Folder folderInDB = folderRepository.findByName(folderName);
+            if (folderInDB != null) {
+                // 그동안 저장된 폴더들을 모두 삭제!
+                for (Folder folder : folderList) {
+                    folderRepository.delete(folder);
+                }
+
+                // DB 에 중복 폴더명 존재한다면 Exception 발생시킴
+                throw new IllegalArgumentException("중복된 폴더명 (" + folderName +") 을 삭제하고 재시도해 주세요!");
             }
+
+            // 2) 폴더를 DB 에 저장
+            Folder folder = new Folder(folderName, user);
+            folder = folderRepository.save(folder);
+
+            // 3) folderList 에 folder Entity 객체를 추가
+            folderList.add(folder);
         }
 
-        folderList = folderRepository.saveAll(folderList);
         return folderList;
     }
 
