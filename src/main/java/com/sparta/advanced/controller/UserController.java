@@ -118,7 +118,7 @@ public class UserController {
         return againUser2;
     }
 
-    @GetMapping("/user/test/update/1")
+    @GetMapping("/user/test/update/1") // 변경하여도 원본 DB에서는 반영이 안됨
     @ResponseBody
     public User updateUser1() {
         // 테스트 회원 "user1" 생성
@@ -153,7 +153,7 @@ public class UserController {
         return user2;
     }
 
-    @GetMapping("/user/test/update/2")
+    @GetMapping("/user/test/update/2") // 변경한 것을 save했기 때문에 원본 DB에 반영 됨
     @ResponseBody
     public User updateUser2() {
         // 테스트 회원 "user1" 생성
@@ -184,7 +184,7 @@ public class UserController {
         return user1;
     }
 
-    @GetMapping("/user/test/update/3")
+    @GetMapping("/user/test/update/3") // @Transactional을 이용해서 원본DB에 반영이 되게 함
     @ResponseBody
     @Transactional
     public void updateUse3() {
