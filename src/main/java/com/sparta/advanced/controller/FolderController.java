@@ -50,18 +50,4 @@ public class FolderController {
         page = page - 1;
         return folderService.getProductsOnFolder(userDetails.getUser(), page, size, sortBy, isAsc, folderId);
     }
-
-    @ExceptionHandler({ IllegalArgumentException.class })
-    public ResponseEntity<Object> handle(IllegalArgumentException ex) {
-        ApiException apiException = new ApiException(
-                ex.getMessage(),
-                // HTTP 400 -> Client Error
-                HttpStatus.BAD_REQUEST
-        );
-
-        return new ResponseEntity<>(
-                apiException,
-                HttpStatus.BAD_REQUEST
-        );
-    }
 }
