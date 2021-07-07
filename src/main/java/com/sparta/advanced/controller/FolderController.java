@@ -1,6 +1,7 @@
 package com.sparta.advanced.controller;
 
 import com.sparta.advanced.dto.FolderCreateRequestDto;
+import com.sparta.advanced.exception.ApiException;
 import com.sparta.advanced.model.Folder;
 import com.sparta.advanced.model.Product;
 import com.sparta.advanced.model.User;
@@ -8,6 +9,8 @@ import com.sparta.advanced.security.UserDetailsImpl;
 import com.sparta.advanced.service.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
